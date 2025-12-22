@@ -1,7 +1,7 @@
 # Why?
 
 Utility to quickly clone a broadcast from [lichess](https://lichess.org) to a local lila instance.
-For those of us without root access to many or broadcast sources.
+For those of us without root access to manta or broadcast sources.
 
 # Usage:
 
