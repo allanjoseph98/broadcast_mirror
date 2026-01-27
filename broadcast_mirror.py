@@ -71,6 +71,7 @@ def create_local_tournament(
         "info.website": website,
         "teamTable": "true" if teamTable else "false",
         "showScores": "true",
+        "showTeamScores": "true" if teamTable else "false",
         "showRatingDiffs": "true",
     }
     url = f"{local_base.rstrip('/')}/broadcast/new"
