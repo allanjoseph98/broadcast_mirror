@@ -48,7 +48,7 @@ def create_local_tournament(
     name: str = tour_info.get("name", "Broadcast")
     description: str = tour_info.get("description", "")
     info = tour_info.get("info", {})
-    fideTc: str | None = info.get("fideTc")
+    fideTC: str | None = info.get("fideTC")
     format: str | None = info.get("format")
     location: str | None = info.get("location")
     players: str | None = info.get("players")
@@ -61,7 +61,7 @@ def create_local_tournament(
         "name": name,
         "description": description,
         "visibility": "public",
-        "info.fideTc": fideTc,
+        "info.fideTC": fideTC,
         "info.format": format,
         "info.tc": tc,
         "info.location": location,
