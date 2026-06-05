@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+import argparse
 import os
 import sys
-import argparse
 import time
-import requests
+
 import dotenv
+import requests
 
 LICHESS_BASE = "https://lichess.org"
 
@@ -98,6 +99,8 @@ def create_local_round(
 ) -> dict:
     name: str = round.get("name", "Round")
     rated: bool = round.get("rated", True)
+    startsAt: int | None = round.get("startsAt")
+    startsAfterPrevious: bool | None = round.get("startsAfterPrevious")
     customScoring: dict = round.get("customScoring", {})
     tiebreaks: list = tour.get("tiebreaks", [])
     form: dict[str, object] = {
@@ -105,6 +108,8 @@ def create_local_round(
         "syncSource": "push",
         "rated": "true" if rated else "false",
         "tiebreaks[]": tiebreaks,
+        "startsAt": startsAt,
+        "startsAfterPrevious": startsAfterPrevious,
     }
     if customScoring:
         for color in ["white", "black"]:
