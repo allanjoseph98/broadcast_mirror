@@ -109,7 +109,7 @@ def create_local_round(
         "rated": "true" if rated else "false",
         "tiebreaks[]": tiebreaks,
         "startsAt": startsAt,
-        "startsAfterPrevious": startsAfterPrevious,
+        "startsAfterPrevious": startsAfterPrevious if not startsAt else None,
     }
     if customScoring:
         for color in ["white", "black"]:
