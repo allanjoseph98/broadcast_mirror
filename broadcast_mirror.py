@@ -9,25 +9,15 @@ import requests
 
 LICHESS_BASE = "https://lichess.org"
 
-dotenv.load_dotenv()
+_ = dotenv.load_dotenv()
 
 
-def get_session() -> requests.Session:
-    s = requests.Session()
-    s.headers.update(
-        {
-            "User-Agent": "lichess-broadcast-clone-lila/1.0",
-        }
-    )
-    return s
-
-
-def post_session(token: str | None) -> requests.Session:
+def get_session(token: str) -> requests.Session:
     s = requests.Session()
     s.headers.update(
         {
             "Authorization": f"Bearer {token}",
-            "User-Agent": "lichess-broadcast-clone-lila/1.0",
+            "User-Agent": "lichess-broadcast-clone-lila",
         }
     )
     return s
@@ -150,6 +140,7 @@ def main():
         required=False,
     )
     args = parser.parse_args()
+    lichess_token = os.environ.get("LICHESS_TOKEN")
     local_token = os.environ.get("LOCAL_LICHESS_TOKEN")
     tour_id = args.tour_id
     local_lila = args.local_lila
@@ -160,9 +151,15 @@ def main():
             file=sys.stderr,
         )
         sys.exit(1)
+    elif not lichess_token:
+        print("Error: Lichess token is required (set LICHESS_TOKEN)", file=sys.stderr)
+        sys.exit(1)
+    elif not tour_id:
+        print("Error: Tournament ID is required (--tour-id)", file=sys.stderr)
+        sys.exit(1)
 
-    session = get_session()
-    local_session = post_session(local_token)
+    session = get_session(lichess_token)
+    local_session = get_session(local_token)
 
     tour = fetch_broadcast_tournament(session, tour_id)
     local_tour = create_local_tournament(local_lila, local_session, tour)
